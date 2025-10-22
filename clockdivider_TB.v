@@ -33,4 +33,8 @@ begin
     forever #10 clock_in=~clock_in;
     
 end
+initial begin
+    #(2000);
+    $finish;
+    end
 endmodule
