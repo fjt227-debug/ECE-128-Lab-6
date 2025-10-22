@@ -28,10 +28,10 @@ reg[1:0] counter=2'd0;
 
 always @(posedge clock_in)
 begin 
-    counter <= counter + 1;
+    counter <= counter + 1'b1;
     if(counter==2'b01)begin
         clock_out<=~clock_out;
-        counter<=0;
+        counter<= 2'b00;
     end
 end
 endmodule
