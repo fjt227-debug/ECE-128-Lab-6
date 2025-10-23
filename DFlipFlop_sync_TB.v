@@ -24,22 +24,26 @@ module DFlipFlop_sync_TB();
     reg clk;
     reg d;
     reg rstn;
-    reg [2:0] delay;
-    integer i;
+   
     DFlipFlop_sync DUT(.d(d),.rstn(rstn),.clk(clk),.q(q));
-    
-    always #10 clk = ~clk;
-    
     initial begin
-    clk <= 0;
-    d <= 0;
-    rstn <= 0;
-    #15 d <= 1;
-    #10 rstn <= 1;
-    for (i = 0; i < 5; i=i+1)
-        begin
-        delay = $random;
-        #(delay) d <= i;
-        end
-     end
+    clk=0;
+    forever #10 clk =~clk;
+    end
+ 
+    initial begin
+    @(posedge clk);
+    d = 1;
+    rstn=1;
+    @(posedge clk);
+    d = 0;
+    rstn=1;
+    @(posedge clk);
+    d = 1;
+    rstn = 1;//q=1
+    @(negedge clk);
+    d = 1;
+    rstn = 0;//q=0
+
+    end 
 endmodule
